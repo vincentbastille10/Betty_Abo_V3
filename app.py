@@ -565,7 +565,7 @@ def call_llm_with_history(system_prompt: str, history: list, user_input: str) ->
                 .get("content", "")
                 .strip()
             )
-            return content or ""
+            return content or "LLM VIDE"
         app.logger.warning(f"[LLM] HTTP {r.status_code}: {r.text[:200]}")
     except Exception as e:
         app.logger.error(f"[LLM] {type(e).__name__}: {e}")
