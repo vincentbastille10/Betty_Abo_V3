@@ -1077,8 +1077,8 @@ def bettybot_reply():
     # 7. Extract lead from LLM response
     # ----------------------------------------------------------
     response_text, lead = extract_lead_json(llm_text)
-    response_text = (response_text or "").strip() or "Je suis là pour vous aider 🙂"
-
+    response_text = (response_text or llm_text or "").strip()
+    
     # ----------------------------------------------------------
     # 8. Determine stage + send lead email if complete
     # ----------------------------------------------------------
