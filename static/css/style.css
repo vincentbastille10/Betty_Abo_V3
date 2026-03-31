@@ -1,0 +1,158 @@
+/* ---------- Thème de base ---------- */
+:root{
+  --bg:#0d1117;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --card:#0b0f14;
+  --border:#1f2937;
+  --primary:#4F46E5;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+h1{font-size:42px;line-height:1.15;text-align:center;margin:18px 0 8px}
+h2{font-size:28px;margin:8px 0 12px;text-align:center}
+a{color:inherit;text-decoration:none}
+
+/* ---------- Layouts ---------- */
+.intro{max-width:820px;margin:0 auto 10px;text-align:center;color:var(--muted);font-size:18px}
+.hero-cta{display:flex;gap:12px;justify-content:center;margin:18px 0 10px}
+.trust{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:10px 0 4px;color:var(--muted);font-size:.95rem}
+.logos{display:flex;gap:14px;justify-content:center;align-items:center;margin:8px 0 0}
+.logos img{height:22px;opacity:.9;filter:grayscale(100%);border-radius:4px;border:1px solid var(--border);background:#0b0f14;padding:4px}
+.logos-label{color:var(--muted);font-size:.95rem}
+
+/* ---------- Cartes & boutons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 16px;border-radius:10px;border:1px solid var(--border);
+  background:var(--card);color:var(--text);cursor:pointer
+}
+.btn:hover{filter:brightness(1.05)}
+.btn.primary{background:var(--primary);border-color:transparent}
+.btn.big{padding:14px 22px;font-size:18px;font-weight:700}
+
+.demo-frame{
+  max-width:540px;margin:0 auto;background:var(--card);
+  border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 35px rgba(0,0,0,.35)
+}
+.chat-frame{height:520px;border-radius:18px;overflow:hidden}
+
+/* ---------- Features ---------- */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:18px auto 8px}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:left}
+.feature h3{margin:0 0 6px;font-size:1.05rem}
+
+/* ---------- Metrics ---------- */
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:10px auto 6px}
+.metric{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center}
+.m-num{font-size:28px;font-weight:800;letter-spacing:.2px}
+.m-label{color:var(--muted);margin-top:6px}
+
+/* ---------- Testimonials ---------- */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px;margin:10px auto 6px}
+.t-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.t-stars{color:#fbbf24;font-weight:700;letter-spacing:1px}
+.t-quote{margin:0;color:var(--text)}
+.t-author{display:flex;align-items:center;gap:10px;margin-top:auto}
+.t-author img{width:36px;height:36px;border-radius:8px;border:1px solid var(--border);background:#0b0f14;object-fit:cover}
+.t-name{font-weight:700}
+.t-role{color:var(--muted);font-size:.9rem}
+
+/* ---------- Trustpilot ---------- */
+.trustpilot{
+  display:flex;justify-content:center;align-items:center;gap:10px;
+  margin:10px 0 2px;color:var(--muted)
+}
+.trustpilot img{height:22px;border:1px solid var(--border);border-radius:4px;background:#0b0f14;padding:4px}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:980px;margin:22px auto 0}
+.faq-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.faq details{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px
+}
+.faq summary{cursor:pointer;font-weight:700;outline:none;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq .faq-body{color:var(--muted);margin-top:8px;line-height:1.45}
+
+/* ---------- Responsive ---------- */
+@media (max-width:900px){
+  .features,.metrics,.testimonials,.faq-list{grid-template-columns:1fr}
+  .demo-frame{margin:0 10px}
+}
+
+/* ===== Page config ===== */
+.cfg-grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px}
+.card h2{margin:0 0 10px 0;font-size:1.15rem}
+
+.avatar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.avatar-card{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:10px;border:1px solid var(--border);border-radius:12px;background:#0b0f14;cursor:pointer
+}
+.avatar-card input[type="radio"]{display:none}
+.avatar-card img{
+  width:4cm;height:4cm;object-fit:cover;border-radius:12px;border:1px solid var(--border);
+  display:block;margin:0 auto;
+}
+.avatar-card .a-label{font-weight:600}
+.avatar-card.selected{outline:2px solid var(--primary)}
+
+.color-grid{display:grid;grid-template-columns:repeat(6,36px);gap:10px;align-items:center}
+.color-swatch{width:36px;height:36px;border-radius:10px;background:var(--c);border:2px solid transparent;cursor:pointer;display:inline-block}
+.color-swatch input{display:none}
+.color-swatch:has(input:checked){outline:2px solid var(--primary)}
+
+.axes-wrap{
+  display:grid;grid-template-columns:auto 220px auto;
+  grid-template-rows:auto 220px auto;gap:8px;align-items:center;justify-items:center
+}
+.axis-label{color:var(--muted);font-size:.95rem}
+.axis-label.top{grid-column:2;grid-row:1}
+.axis-label.left{grid-column:1;grid-row:2}
+.axis-label.right{grid-column:3;grid-row:2}
+.axis-label.bottom{grid-column:2;grid-row:3}
+
+.joystick{
+  grid-column:2;grid-row:2;width:220px;height:220px;border:1px solid var(--border);
+  border-radius:12px;position:relative;background:
+    linear-gradient(to right, transparent 49.5%, rgba(255,255,255,.06) 50%, transparent 50.5%),
+    linear-gradient(to bottom, transparent 49.5%, rgba(255,255,255,.06) 50%, transparent 50.5%),
+    #0b0f14;
+  touch-action:none;
+}
+.thumb{
+  position:absolute;width:20px;height:20px;border-radius:50%;
+  background:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.25);
+  pointer-events:none;
+}
+
+.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.field input,.field textarea{
+  background:#0b0f14;border:1px solid var(--border);border-radius:10px;color:var(--text);padding:10px
+}
+
+.cta{grid-column:1 / -1;display:flex;justify-content:center;margin:8px 0}
+
+/* Responsive */
+@media (max-width:900px){
+  .cfg-grid{grid-template-columns:1fr}
+  .avatar-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* Typing indicator */
+.bubble.typing{background:#111827;border:1px solid var(--border);color:var(--muted)}
+.bubble.typing .label{font-weight:600;margin-right:6px}
+.bubble.typing .dots i{display:inline-block;width:4px;margin-left:3px;opacity:.15;animation:bettyblink 1.2s infinite}
+.bubble.typing .dots i:nth-child(2){animation-delay:.2s}
+.bubble.typing .dots i:nth-child(3){animation-delay:.4s}
+@keyframes bettyblink{0%,20%{opacity:.15}50%{opacity:.9}100%{opacity:.15}}

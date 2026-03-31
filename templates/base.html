@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+  {# ==========================================
+     ✅ BASE.HTML COMPLET — OPTIMISÉ SEO + PARTAGE
+     - Title / Meta description / Canonical
+     - OpenGraph + Twitter
+     - Robots (index par défaut)
+     - JSON-LD intégré (sans avoir besoin de Python)
+     - Favicons + PWA
+     ========================================== #}
+
+  <title>{{ title or "Betty Bot — Assistante IA métier pour sites professionnels | Spectra Media AI" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {# --- SEO --- #}
+  <meta name="description"
+        content="{{ meta_description or 'Betty Bot est une assistante IA métier (type ChatGPT) à intégrer sur votre site pour répondre 24/7, qualifier vos visiteurs et vous envoyer des leads (nom, email, téléphone, besoin). Essai gratuit 7 jours. 79,90 €/mois.' }}">
+
+  {# Canonical: évite le duplicate à cause de ?ref=... etc. #}
+  <link rel="canonical" href="{{ canonical_url or request.base_url }}">
+
+  {# Robots: index par défaut (tu peux override avec robots='noindex,nofollow' sur certaines pages) #}
+  <meta name="robots" content="{{ robots or 'index,follow,max-image-preview:large' }}">
+
+  {# --- OpenGraph (Facebook/LinkedIn/WhatsApp) --- #}
+  <meta property="og:type" content="{{ og_type or 'website' }}">
+  <meta property="og:site_name" content="Spectra Media AI">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="{{ og_title or (title or 'Betty Bot — Assistante IA métier') }}">
+  <meta property="og:description"
+        content="{{ og_description or (meta_description or 'Assistante IA métier à intégrer sur votre site : réponses 24/7, qualification automatique, leads envoyés. Essai gratuit 7 jours.') }}">
+  <meta property="og:url" content="{{ canonical_url or request.base_url }}">
+  <meta property="og:image" content="{{ og_image or url_for('static', filename='og-betty.jpg', _external=True) }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  {# --- Twitter Card --- #}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ twitter_title or (og_title or (title or 'Betty Bot — Assistante IA métier')) }}">
+  <meta name="twitter:description"
+        content="{{ twitter_description or (og_description or (meta_description or 'Assistante IA métier à intégrer sur votre site : réponses 24/7, qualification automatique, leads envoyés.')) }}">
+  <meta name="twitter:image" content="{{ twitter_image or (og_image or url_for('static', filename='og-betty.jpg', _external=True)) }}">
+
+  {# --- Performance (optionnel mais propre) --- #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  {# --- CSS --- #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="preload" as="image" href="{{ url_for('static', filename='betty_neutre_001.webp') }}">
+  <link rel="preload" as="image" href="{{ url_for('static', filename='label.webp') }}"> 
+ 
+  {# --- Favicons / PWA --- #}
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0d1117">
+
+  {# ==========================================
+     ✅ JSON-LD (Organisation + SoftwareApplication)
+     - Injecté directement ici (zéro Python)
+     - Google comprend : qui / quoi / prix
+     ========================================== #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.spectramedia.online/#organization",
+        "name": "Spectra Media AI",
+        "url": "https://www.spectramedia.online/",
+        "logo": "https://www.spectramedia.online/favicon-32x32.png",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer support",
+          "email": "spectramediabots@gmail.com",
+          "availableLanguage": ["fr"]
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://www.spectramedia.online/#bettybot",
+        "name": "Betty Bot",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Betty Bot est une assistante IA métier (type ChatGPT) développée par Spectra Media AI. Elle s’intègre sur les sites professionnels pour répondre aux visiteurs 24/7, qualifier les demandes (nom, email, téléphone, besoin) et transmettre des leads exploitables.",
+        "offers": {
+          "@type": "Offer",
+          "price": "79.90",
+          "priceCurrency": "EUR",
+          "url": "https://www.spectramedia.online/",
+          "availability": "https://schema.org/InStock"
+        },
+        "publisher": {
+          "@id": "https://www.spectramedia.online/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+
+  {# --- Optionnel: JSON-LD dynamique si tu veux override depuis Flask (tu peux laisser, ça ne gêne pas) --- #}
+  {% if jsonld %}
+    <script type="application/ld+json">{{ jsonld|safe }}</script>
+  {% endif %}
+</head>
+
+<body class="{{ lang }}">
+  
+  <header>
+    {# Gardé, mais tu peux le masquer dans certaines pages (comme tu le fais déjà) #}
+    <h1 class="site-title">🪄 Betty Bots</h1>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer style="text-align:center; padding:20px; opacity:0.7;">
+    <p>© {{ year or "2026" }} Spectra Media AI — Tous droits réservés.</p>
+    <a href="mailto:spectramediabots@gmail.com" style="color:#8ab4ff; text-decoration:none;">
+      Contact
+    </a>
+  </footer>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const lang = urlParams.get("lang");
+
+      if (lang !== "en") return;
+
+      const translations = {
+          // ===== GROS BLOCS D'ABORD =====
+          "Betty est une assistante virtuelle, dotée d'une intelligence artificielle générative, qui répond 24/7, clarifie la demande et vous envoie un message propre avec nom, email, téléphone et besoin.":
+              "Betty is a virtual assistant powered by generative AI. She answers 24/7, qualifies requests, and sends you clean leads with name, email, phone number and need.",
+
+          "Résultat : plus de clients, moins de tri, une image plus pro.":
+              "Result: more clients, less sorting, a stronger professional image.",
+
+          // ===== HERO =====
+          "Embauchez Betty":
+              "Hire Betty",
+
+          "et transformez vos visiteurs en":
+              "and turn your visitors into",
+
+          "acheteur motivés":
+              "qualified leads",
+
+          // ===== BADGES / NAV =====
+          "Réponse 24/7":
+              "24/7 response",
+
+          "Tri des demandes":
+              "Lead qualification",
+
+          "Paiement Stripe":
+              "Stripe payment",
+
+          "Devenir ambassadeur":
+              "Become ambassador",
+
+          // ===== CARTE GAUCHE =====
+          "Assistante virtuelle":
+              "Virtual assistant",
+
+          "Assistant virtuelle":
+              "Virtual assistant",
+
+          "Personnalisez l'assistant pour votre métier":
+              "Customize your assistant for your business",
+
+          "Plus de 20 métiers disponibles":
+              "20+ industries available",
+
+          // ===== PASTILLES =====
+          "plus de clients":
+              "more clients",
+
+          "plus de temps":
+              "more time",
+
+          "meilleure réputation":
+              "better reputation",
+
+          "essai 7 jours":
+              "7-day free trial",
+
+          // ===== FOOTER =====
+          "Tous droits réservés.":
+              "All rights reserved.",
+
+          "Contact":
+              "Contact"
+      };
+
+      function translateNode(node) {
+          if (node.nodeType === Node.TEXT_NODE) {
+              let text = node.nodeValue;
+
+              for (const [fr, en] of Object.entries(translations)) {
+                  if (text.includes(fr)) {
+                      text = text.split(fr).join(en);
+                  }
+              }
+
+              node.nodeValue = text;
+              return;
+          }
+
+          if (node.nodeType === Node.ELEMENT_NODE) {
+              const tag = node.tagName;
+              if (tag === "SCRIPT" || tag === "STYLE") return;
+          }
+
+          node.childNodes.forEach(child => translateNode(child));
+      }
+
+      translateNode(document.body);
+  });
+  </script>
+</body>
+</html>

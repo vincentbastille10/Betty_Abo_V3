@@ -1,0 +1,879 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+  header h1.site-title { display:none; }
+
+  :root{
+    --bb-bg: #07090f;
+    --bb-bg2: #0d1121;
+    --bb-surface: rgba(255,255,255,0.04);
+    --bb-surface-2: rgba(255,255,255,0.03);
+    --bb-border: rgba(255,255,255,0.08);
+    --bb-border-strong: rgba(79,124,255,0.22);
+    --bb-accent: #4f7cff;
+    --bb-accent2: #00c9a7;
+    --bb-text: #eef0f8;
+    --bb-muted: #7a85a8;
+    --bb-radius: 20px;
+    --bb-radius-sm: 14px;
+    --bb-shadow: 0 18px 50px rgba(0,0,0,.35);
+  }
+
+  .insc-wrap{
+    max-width:1100px;
+    margin:18px auto 0;
+    padding:0 10px 24px;
+    position:relative;
+  }
+
+  .insc-glow{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    pointer-events:none;
+    z-index:0;
+    opacity:.8;
+  }
+  .insc-glow.g1{
+    width:420px;height:420px;
+    background:rgba(79,124,255,.12);
+    top:10px;right:-80px;
+  }
+  .insc-glow.g2{
+    width:320px;height:320px;
+    background:rgba(0,201,167,.08);
+    bottom:40px;left:-80px;
+  }
+
+  .insc-top,
+  .split{
+    position:relative;
+    z-index:1;
+  }
+
+  .insc-top{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    margin:10px 0 18px;
+  }
+
+  /* HERO */
+  .hero{
+    width:100%;
+    max-width:1100px;
+    border-radius:24px;
+    overflow:hidden;
+    border:1px solid var(--bb-border);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(79,124,255,.22), transparent 42%),
+      radial-gradient(circle at 85% 24%, rgba(0,201,167,.13), transparent 38%),
+      radial-gradient(circle at 50% 100%, rgba(236,72,153,.10), transparent 44%),
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
+    box-shadow:var(--bb-shadow);
+    padding:26px 24px;
+    position:relative;
+  }
+
+  .hero-inner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    text-align:center;
+  }
+
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border-radius:999px;
+    background:rgba(79,124,255,.11);
+    border:1px solid rgba(79,124,255,.22);
+    font-size:13px;
+    font-weight:700;
+    color:#9db3ff;
+    letter-spacing:.02em;
+  }
+  .hero-eyebrow::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--bb-accent2);
+    box-shadow:0 0 0 0 rgba(0,201,167,.35);
+    animation:pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot{
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(.8);opacity:.55}
+  }
+
+  .hero-left{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+    text-align:center;
+  }
+
+  .hero-title{
+    margin:0;
+    font-family:'Syne', sans-serif;
+    font-size:clamp(34px, 5vw, 62px);
+    letter-spacing:-1.4px;
+    color:var(--bb-text);
+    font-weight:800;
+    line-height:1.02;
+    max-width:900px;
+  }
+
+  .hero-title em{
+    font-style:normal;
+    background:linear-gradient(135deg, var(--bb-accent), var(--bb-accent2));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+
+  .hero-sub{
+    margin:0;
+    color:var(--bb-muted);
+    line-height:1.7;
+    font-size:clamp(16px, 1.8vw, 20px);
+    max-width:720px;
+    font-weight:300;
+  }
+
+  .promo-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(0,0,0,.18);
+    backdrop-filter: blur(8px);
+    color:var(--bb-text);
+    font-weight:900;
+    white-space:nowrap;
+  }
+  .promo-badge .tag{
+    font-size:.78rem;
+    padding:6px 10px;
+    border-radius:999px;
+    background:rgba(79,124,255,.16);
+    border:1px solid rgba(79,124,255,.30);
+    color:#b4c5ff;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .promo-badge .price{
+    font-size:1.04rem;
+  }
+  .promo-badge .old{
+    font-size:.9rem;
+    color:var(--bb-muted);
+    text-decoration:line-through;
+    font-weight:700;
+    margin-left:4px;
+  }
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:999px;
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--bb-border);
+    color:var(--bb-muted);
+    text-align:center;
+    backdrop-filter: blur(10px);
+  }
+  .pill b{ color:var(--bb-text); }
+
+  .kpi-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:2px 0 0;
+  }
+  .kpi{
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid var(--bb-border);
+    background:rgba(255,255,255,.03);
+    color:var(--bb-muted);
+    font-size:.95rem;
+  }
+  .kpi strong{ color:var(--bb-text); }
+
+  .trust-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:4px;
+  }
+  .trust-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    border:1px solid var(--bb-border);
+    background:rgba(255,255,255,.02);
+    color:var(--bb-muted);
+    font-size:.92rem;
+  }
+
+  /* PROOF */
+  .proof-banner{
+    width:100%;
+    border-radius:22px;
+    background:linear-gradient(135deg, rgba(79,124,255,.12), rgba(0,201,167,.08));
+    border:1px solid rgba(79,124,255,.18);
+    padding:18px 18px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .proof-avatar{
+    width:52px;height:52px;border-radius:50%;
+    background:linear-gradient(135deg, var(--bb-accent), var(--bb-accent2));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-family:'Syne', sans-serif;
+    font-weight:800;
+    font-size:18px;
+    flex:0 0 auto;
+  }
+  .proof-text{
+    flex:1;
+    min-width:220px;
+  }
+  .proof-text strong{
+    display:block;
+    font-family:'Syne', sans-serif;
+    font-size:20px;
+    line-height:1.1;
+    color:var(--bb-text);
+    margin-bottom:4px;
+  }
+  .proof-text p{
+    color:var(--bb-muted);
+    margin:0;
+    font-size:.95rem;
+    line-height:1.5;
+  }
+  .proof-chip{
+    color:var(--bb-accent2);
+    font-size:.92rem;
+    font-weight:700;
+    border:1px solid rgba(0,201,167,.25);
+    padding:8px 14px;
+    border-radius:999px;
+    white-space:nowrap;
+    background:rgba(0,201,167,.05);
+  }
+
+  /* SPLIT */
+  .split{
+    display:grid;
+    grid-template-columns:1.04fr .96fr;
+    gap:18px;
+    align-items:start;
+    margin-top:16px;
+  }
+
+  .card{
+    border:1px solid var(--bb-border);
+    border-radius:24px;
+    padding:24px 22px;
+    background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+    box-shadow:0 12px 40px rgba(0,0,0,.22);
+    backdrop-filter: blur(10px);
+  }
+
+  .card h2{
+    margin:0 0 10px 0;
+    font-family:'Syne', sans-serif;
+    font-size:clamp(24px, 3vw, 36px);
+    letter-spacing:-.9px;
+    line-height:1.05;
+    color:var(--bb-text);
+  }
+
+  .intro{
+    color:var(--bb-muted);
+    line-height:1.7;
+    font-size:1rem;
+    margin:0 0 12px 0;
+  }
+
+  .lead-list{
+    margin:12px 0 0;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .lead-list li{
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--bb-border);
+    border-radius:16px;
+    padding:14px 14px;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    color:var(--bb-muted);
+    line-height:1.45;
+  }
+  .check{
+    width:24px;height:24px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:rgba(79,124,255,.18);
+    border:1px solid rgba(79,124,255,.35);
+    color:var(--bb-text);
+    flex:0 0 auto;
+    margin-top:1px;
+    font-weight:700;
+  }
+
+  .whatyouget{
+    margin-top:14px;
+    padding:14px 14px;
+    border-radius:16px;
+    border:1px solid var(--bb-border);
+    background:rgba(255,255,255,.02);
+  }
+  .whatyouget h3{
+    margin:0 0 8px 0;
+    font-size:1rem;
+    color:var(--bb-text);
+    font-family:'Syne', sans-serif;
+    letter-spacing:-.2px;
+  }
+  .whatyouget ul{
+    margin:0;
+    padding-left:18px;
+    color:var(--bb-muted);
+    line-height:1.5;
+  }
+  .whatyouget li{ margin:6px 0; }
+
+  .mini-note{
+    margin-top:12px;
+    color:var(--bb-muted);
+    font-size:.95rem;
+    line-height:1.5;
+  }
+  .mini-note b{ color:var(--bb-text); }
+
+  /* CONFIG RECAP */
+  .config-box{
+    margin:0 0 14px 0;
+    padding:14px 14px;
+    border-radius:16px;
+    border:1px solid var(--bb-border);
+    background:rgba(255,255,255,.02);
+  }
+  .config-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .config-title h3{
+    margin:0;
+    font-size:1rem;
+    font-family:'Syne', sans-serif;
+    color:var(--bb-text);
+  }
+
+  .config-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:14px;
+    align-items:center;
+  }
+
+  .config-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .config-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--bb-border);
+    color:var(--bb-muted);
+    font-size:.92rem;
+  }
+  .config-tag strong{ color:var(--bb-text); }
+
+  .bot-preview{
+    min-width:220px;
+    max-width:260px;
+    margin-left:auto;
+    padding:12px;
+    border-radius:18px;
+    border:1px solid var(--bb-border);
+    background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  }
+
+  .bot-preview-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+
+  .bot-avatar{
+    width:36px;height:36px;border-radius:50%;
+    overflow:hidden;
+    border:1px solid var(--bb-border);
+    background:linear-gradient(135deg, #1a2034, #101625);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+    font-size:18px;
+    flex:0 0 auto;
+  }
+  .bot-avatar img{
+    width:100%;height:100%;object-fit:cover;display:block;
+  }
+
+  .bot-meta{
+    min-width:0;
+  }
+  .bot-name{
+    font-size:.95rem;
+    font-weight:700;
+    color:var(--bb-text);
+    line-height:1.2;
+  }
+  .bot-state{
+    font-size:.8rem;
+    color:var(--bb-muted);
+    line-height:1.2;
+  }
+
+  .bot-bubble{
+    width:fit-content;
+    max-width:100%;
+    padding:10px 12px;
+    border-radius:14px 14px 14px 6px;
+    color:#fff;
+    font-size:.92rem;
+    line-height:1.4;
+    word-break:break-word;
+    background:var(--bb-accent);
+    box-shadow:0 8px 24px rgba(79,124,255,.18);
+  }
+
+  /* FORM */
+  .form-card .field{ margin:0; }
+  .field label{
+    display:block;
+    color:var(--bb-muted);
+    font-weight:800;
+    margin:0 0 8px 0;
+  }
+  .field input{
+    width:100%;
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--bb-border);
+    border-radius:14px;
+    color:var(--bb-text);
+    padding:14px 16px;
+    font-size:1rem;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s, background .2s;
+  }
+  .field input::placeholder{
+    color:#6d7797;
+  }
+  .field input:focus{
+    border-color:rgba(79,124,255,.45);
+    box-shadow:0 0 0 4px rgba(79,124,255,.10);
+    background:rgba(255,255,255,.06);
+  }
+
+  .form-actions{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:14px;
+  }
+
+  .btn.primary.big{
+    box-shadow:0 12px 32px rgba(79,124,255,.22);
+    border-radius:16px;
+    padding:15px 18px;
+    font-weight:800;
+    font-size:1rem;
+  }
+  .btn.primary.big:hover{
+    filter:brightness(1.05);
+    transform:translateY(-1px);
+  }
+
+  .subtext{
+    color:var(--bb-muted);
+    font-size:.95rem;
+    line-height:1.5;
+    text-align:center;
+  }
+
+  .legal{
+    margin-top:12px;
+    color:var(--bb-muted);
+    font-size:.9rem;
+    line-height:1.45;
+    text-align:center;
+    opacity:.95;
+  }
+
+  .small-proof{
+    margin-top:12px;
+    padding:10px 12px;
+    border-radius:14px;
+    border:1px solid rgba(79,124,255,.18);
+    background:linear-gradient(135deg, rgba(79,124,255,.08), rgba(0,201,167,.05));
+    color:var(--bb-muted);
+    text-align:center;
+    font-size:.92rem;
+  }
+  .small-proof strong{ color:var(--bb-text); }
+
+  @media (max-width:980px){
+    .split{ grid-template-columns:1fr; }
+    .config-grid{ grid-template-columns:1fr; }
+    .bot-preview{
+      margin-left:0;
+      max-width:none;
+      min-width:0;
+    }
+  }
+
+  @media (max-width:700px){
+    .insc-wrap{ margin-top:10px; }
+    .hero{ padding:20px 16px; border-radius:20px; }
+    .hero-title{ font-size:clamp(30px, 9vw, 42px); letter-spacing:-1px; }
+    .hero-sub{ font-size:1rem; }
+    .promo-badge{ justify-content:center; white-space:normal; text-align:center; }
+    .card{ padding:18px 16px; border-radius:20px; }
+    .proof-banner{ padding:16px; }
+  }
+</style>
+
+<div class="insc-wrap">
+  <div class="insc-glow g1"></div>
+  <div class="insc-glow g2"></div>
+
+  <!-- HERO -->
+  <div class="insc-top">
+    <div class="hero" aria-label="Inscription Betty Bots">
+      <div class="hero-inner">
+        <div class="hero-eyebrow">Activation finale — votre Betty est presque prête</div>
+
+        <div class="hero-left">
+          <h1 class="hero-title">Activez votre <em>Betty</em> maintenant</h1>
+          <p class="hero-sub">
+            Vos visiteurs sont déjà sur votre site.  
+            <b>Ne les laissez plus repartir sans réponse, sans contact, sans demande claire.</b>
+          </p>
+        </div>
+
+        <div class="promo-badge" aria-label="promotion">
+          <span class="tag">offre</span>
+          <span class="price">59€</span>
+          <span class="old">au lieu de 129€</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pill">
+      ✨ <b>Activation en 30 secondes</b> · 7 jours offerts · Annulable quand vous voulez
+    </div>
+
+    <div class="kpi-row" aria-label="points clés">
+      <div class="kpi">✅ <strong>Leads captés</strong> automatiquement</div>
+      <div class="kpi">✅ <strong>Réponses 24/7</strong> comme une vraie assistante</div>
+      <div class="kpi">✅ <strong>Essai 7 jours</strong> puis 59 €/mois</div>
+    </div>
+
+    <div class="trust-row" aria-label="rassurance">
+      <div class="trust-badge">🔒 Paiement sécurisé Stripe</div>
+      <div class="trust-badge">📩 Vos leads envoyés par email</div>
+      <div class="trust-badge">⚡ Mise en route simple</div>
+    </div>
+
+    <div class="proof-banner">
+      <div class="proof-avatar">DL</div>
+      <div class="proof-text">
+        <strong>+12 demandes reçues en 7 jours</strong>
+        <p>Centre de danse Delphine Letort, Le Mans — les visiteurs qui repartaient avant laissent maintenant leurs coordonnées.</p>
+      </div>
+      <div class="proof-chip">Betty en conditions réelles</div>
+    </div>
+  </div>
+
+  <div class="split">
+
+    <!-- COLONNE GAUCHE -->
+    <section class="card">
+      <h2 style="text-align:left;">Finalisez votre inscription</h2>
+
+      <p class="intro" style="text-align:left;">
+        Vous êtes à <b>1 étape</b> d’activer votre <b>Betty</b>.  
+        Elle discute avec vos visiteurs, <b>capte leurs coordonnées</b> et vous envoie des leads <b>par email</b>.
+      </p>
+
+      <ul class="lead-list">
+        <li>
+          <span class="check">✓</span>
+          <div><b>Votre email = boîte de réception des leads</b><br>Chaque contact capté par le bot arrive à cette adresse.</div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div><b>Essai gratuit 7 jours</b><br>Vous testez tranquillement. Débit <b>après l’essai</b> si vous gardez l’abonnement.</div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div><b>Annulable quand vous voulez</b><br>Pas d’engagement : vous gardez la main, à tout moment.</div>
+        </li>
+      </ul>
+
+      <div class="whatyouget">
+        <h3>Ce que vous recevez dès aujourd’hui</h3>
+        <ul>
+          <li>Votre Betty active (réponses 24/7) pour ne plus rater de demandes</li>
+          <li>Des leads envoyés automatiquement sur <b>votre email</b></li>
+          <li>Une mise en route simple : vous validez l’email, puis Stripe</li>
+        </ul>
+      </div>
+
+      <p class="mini-note">
+        <b>Conseil :</b> mettez une adresse que vous surveillez vraiment.
+        C’est <b>l’adresse officielle</b> qui recevra vos prospects captés.
+      </p>
+
+      <p class="mini-note">
+        <b>Vous ne prenez aucun risque :</b> vous avez 7 jours pour tester.
+        Si ce n’est pas pour vous, vous annulez — point.
+      </p>
+    </section>
+
+    <!-- COLONNE DROITE -->
+    <section class="card form-card">
+      <div class="config-box">
+        <div class="config-title">
+          <h3>Votre Betty est déjà configurée pour</h3>
+          <div class="pill" style="padding:8px 12px;">⚡ Étape 3 / 3 · Activation</div>
+        </div>
+
+        <div class="config-grid">
+          <div class="config-tags">
+            {% if request.args.get('pack') %}
+              <div class="config-tag">🎯 <strong>{{ request.args.get('pack') }}</strong></div>
+            {% else %}
+              <div class="config-tag">🎯 <strong>Métier non défini</strong></div>
+            {% endif %}
+
+            {% if request.args.get('greeting') %}
+              <div class="config-tag">💬 <strong>Message personnalisé</strong></div>
+            {% endif %}
+
+            {% if request.args.get('color') %}
+              <div class="config-tag">🎨 <strong>Couleur personnalisée</strong></div>
+            {% endif %}
+
+            {% if request.args.get('avatar') %}
+              <div class="config-tag">🫶 <strong>Avatar sélectionné</strong></div>
+            {% endif %}
+          </div>
+
+          <div class="bot-preview" aria-label="aperçu Betty">
+            <div class="bot-preview-head">
+              <div class="bot-avatar" id="betty-avatar-preview">🤖</div>
+              <div class="bot-meta">
+                <div class="bot-name">Betty</div>
+                <div class="bot-state">Prête à accueillir vos visiteurs</div>
+              </div>
+            </div>
+            <div class="bot-bubble" id="betty-bubble-preview">
+              {{ request.args.get('greeting') or "Bonjour 👋 Comment puis-je vous aider aujourd’hui ?" }}
+            </div>
+          </div>
+        </div>
+
+        <p class="mini-note" style="margin-top:10px;">
+          💡 Vous pouvez modifier ce paramétrage après activation.
+        </p>
+      </div>
+
+      <h2 style="margin:0 0 8px 0;">Où doit-on envoyer vos leads ?</h2>
+
+      <p class="intro" style="margin:0 0 14px 0;">
+        Entrez votre <b>email professionnel</b> : c’est lui qui recevra les demandes et contacts captés par votre Betty.
+      </p>
+
+      {# IMPORTANT : on rejoue toute la query-string pour ne rien casser côté Python #}
+      <form
+        method="post"
+        action="{{ url_for('inscription_page') }}?pack={{ (request.args.get('pack') or '')|urlencode }}&color={{ (request.args.get('color') or '')|urlencode }}&avatar={{ (request.args.get('avatar') or '')|urlencode }}&greeting={{ (request.args.get('greeting') or '')|urlencode }}&contact={{ (request.args.get('contact') or request.args.get('contact_info') or '')|urlencode }}&px={{ (request.args.get('px') or '0')|urlencode }}&py={{ (request.args.get('py') or '0')|urlencode }}"
+        novalidate
+        id="inscription-form"
+      >
+        <div class="field">
+          <label for="email">Email (réception des leads)</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="exemple@votre-entreprise.com"
+            inputmode="email"
+            value="{{ request.args.get('email','') }}"
+          >
+        </div>
+
+        <div class="small-proof">
+          🔥 <strong>+12 leads en 7 jours</strong> sur un site réel — Betty sert d’abord à capter ce que vous perdez déjà.
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn primary big">Valider et activer mon essai</button>
+
+          <div class="subtext">
+            🔒 Paiement sécurisé via Stripe · <b>7 jours offerts</b> puis 59 €/mois · Annulable quand vous voulez
+          </div>
+
+          <div class="subtext" style="opacity:.92;">
+            Astuce : si vous avez une adresse “contact@…”, c’est souvent la meilleure pour centraliser les leads.
+          </div>
+        </div>
+
+        <!-- Filet de sécurité : copie côté client -->
+        <input type="hidden" id="email_mirror" name="email_mirror" value="">
+
+        <!-- Miroirs de config non destructifs : ajoutés sans casser le flow -->
+        <input type="hidden" id="avatar_mirror" name="avatar_mirror" value="{{ request.args.get('avatar','') }}">
+        <input type="hidden" id="color_mirror" name="color_mirror" value="{{ request.args.get('color','') }}">
+        <input type="hidden" id="greeting_mirror" name="greeting_mirror" value="{{ request.args.get('greeting','') }}">
+        <input type="hidden" id="contact_mirror" name="contact_mirror" value="{{ request.args.get('contact') or request.args.get('contact_info') or '' }}">
+        <input type="hidden" id="pack_mirror" name="pack_mirror" value="{{ request.args.get('pack','') }}">
+        <input type="hidden" id="px_mirror" name="px_mirror" value="{{ request.args.get('px','0') }}">
+        <input type="hidden" id="py_mirror" name="py_mirror" value="{{ request.args.get('py','0') }}">
+      </form>
+
+      <div class="legal">
+        En continuant, vous activez votre inscription et serez redirigé vers Stripe.
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  (function(){
+    const email = document.getElementById("email");
+    const mirror = document.getElementById("email_mirror");
+    if(email && mirror){
+      const sync = () => { mirror.value = (email.value || "").trim(); };
+      email.addEventListener("input", sync);
+      sync();
+    }
+
+    // Secours doux : si certains paramètres n'arrivent pas via l'URL,
+    // on tente de relire une config locale sans casser l'existant.
+    let saved = {};
+    try {
+      saved = JSON.parse(localStorage.getItem("betty_config") || "{}");
+    } catch(e) {
+      saved = {};
+    }
+
+    const args = {
+      avatar: "{{ request.args.get('avatar','')|e }}",
+      color: "{{ request.args.get('color','')|e }}",
+      greeting: "{{ request.args.get('greeting','')|e }}",
+      pack: "{{ request.args.get('pack','')|e }}"
+    };
+
+    const avatarPreview = document.getElementById("betty-avatar-preview");
+    const bubblePreview = document.getElementById("betty-bubble-preview");
+
+    const finalAvatar = args.avatar || saved.avatar || "";
+    const finalColor = args.color || saved.color || "";
+    const finalGreeting = args.greeting || saved.greeting || "";
+
+    // Remplit les hidden mirrors si vides
+    const fillIfEmpty = (id, value) => {
+      const el = document.getElementById(id);
+      if(el && !el.value && value){ el.value = value; }
+    };
+
+    fillIfEmpty("avatar_mirror", finalAvatar);
+    fillIfEmpty("color_mirror", finalColor);
+    fillIfEmpty("greeting_mirror", finalGreeting);
+
+    // Bubble preview
+    if(finalColor && bubblePreview){
+      bubblePreview.style.background = finalColor;
+    }
+    if(finalGreeting && bubblePreview){
+      bubblePreview.textContent = finalGreeting;
+    }
+
+    // Avatar preview
+    if(avatarPreview && finalAvatar){
+      const map = {
+        "a1":"🤖",
+        "a2":"👩",
+        "a3":"🧑",
+        "betty_coiffeur.webp":"💇",
+        "betty_estheticienne.webp":"💄",
+        "betty_aide_a_domicile.webp":"🫶"
+      };
+
+      // Si c'est un vrai fichier image connu / fourni
+      if(/\.(png|jpg|jpeg|webp|gif|svg)$/i.test(finalAvatar) || finalAvatar.indexOf("/") !== -1){
+        const img = document.createElement("img");
+        img.alt = "Avatar Betty";
+        img.src = finalAvatar.startsWith("/static/") || finalAvatar.startsWith("http")
+          ? finalAvatar
+          : "/static/" + finalAvatar;
+
+        img.onerror = function(){
+          avatarPreview.innerHTML = "";
+          avatarPreview.textContent = map[finalAvatar] || "🤖";
+        };
+
+        avatarPreview.innerHTML = "";
+        avatarPreview.appendChild(img);
+      } else {
+        avatarPreview.textContent = map[finalAvatar] || "🤖";
+      }
+    }
+  })();
+</script>
+
+{% endblock %}

@@ -1,0 +1,479 @@
+<!-- CODEX: templates/recap.html -->
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Récapitulatif — Betty Abonnement</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --ink:#f5f7fb;
+      --muted:#a6b0c2;
+      --line:#1f2a3a;
+      --panel:#0f1420;
+      --surface:#111826;
+      --brand: {{ (cfg.color or '#4F46E5')|e }};
+      --ok:#10b981;
+      --warn:#60a5fa;   /* essai */
+      --bad:#ef4444;    /* bloqué */
+      --shadow: 0 8px 28px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.02);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:linear-gradient(180deg, #0b0d12 0%, #0a0f19 60%, #0b0d12 100%);
+      color:var(--ink);
+      font:16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .wrap{
+      width:100%;
+      max-width: 980px;
+      margin: 32px auto;
+      padding: 0 16px 48px;
+    }
+
+    header.top{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      margin:0 0 18px 0;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px;
+      font-weight:800; letter-spacing:.3px;
+    }
+    .logo-badge{
+      width:36px; height:36px; border-radius:10px;
+      background:var(--brand);
+      box-shadow:0 6px 18px rgba(79,70,229,.35);
+    }
+
+    .grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns: minmax(0,1fr) 420px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .headline{margin:0 0 8px; font-size:22px; font-weight:800}
+    .sub{margin:0 0 16px; color:var(--muted)}
+
+    .kv{
+      display:grid;
+      gap:12px;
+      grid-template-columns: 140px 1fr;
+      align-items:start;
+    }
+    @media (max-width:520px){
+      .kv{ grid-template-columns: 1fr; }
+    }
+
+    .k{color:#dbe2ef; font-weight:700}
+    .avatar{
+      width:140px; height:140px; border-radius:14px;
+      object-fit:cover;
+      border:3px solid var(--brand);
+      background:#0b0f18;
+      box-shadow:0 10px 26px rgba(79,70,229,.25);
+    }
+    .info-list{display:grid; gap:10px}
+    .badge{
+      display:inline-block;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#0f172a;
+      border:1px solid #1d2735;
+      color:#cfe3ff;
+      white-space:nowrap;
+    }
+
+    /* ✅ NEW: bandeau statut + CTA */
+    .statusbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+    .status-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 260px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--ok);
+      box-shadow:0 0 0 4px rgba(16,185,129,.18);
+    }
+    .dot.trial{ background:var(--warn); box-shadow:0 0 0 4px rgba(96,165,250,.18); }
+    .dot.blocked{ background:var(--bad); box-shadow:0 0 0 4px rgba(239,68,68,.18); }
+
+    .status-title{ font-weight:800; }
+    .status-hint{ color:var(--muted); font-size:13px; }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:rgba(255,255,255,.92);
+      font-size:13px;
+      text-decoration:none;
+      transition:.18s ease;
+      white-space:nowrap;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.24);
+      background: rgba(255,255,255,.07);
+    }
+    .btn-primary{
+      background: rgba(99,102,241,.20);
+      border-color: rgba(99,102,241,.35);
+    }
+    .btn-primary:hover{
+      background: rgba(99,102,241,.28);
+      border-color: rgba(99,102,241,.48);
+    }
+    .btn[disabled]{
+      opacity:.75;
+      cursor:default;
+      transform:none;
+    }
+
+    details.grp{border:1px solid var(--line); border-radius:12px; overflow:hidden}
+    details.grp + details.grp{margin-top:12px}
+    details.grp > summary{
+      list-style:none;
+      background:var(--panel);
+      padding:14px 16px;
+      cursor:pointer;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    details.grp > summary::-webkit-details-marker{display:none}
+    .chev{
+      width:10px;height:10px;
+      border-right:2px solid #7e8aa6;
+      border-bottom:2px solid #7e8aa6;
+      transform:rotate(-45deg);
+      transition:.25s;
+    }
+    details[open] .chev{transform:rotate(45deg)}
+    .sub-panel{
+      padding:16px;
+      background:linear-gradient(180deg,#0c111b 0%, #0a0f19 100%);
+      border-top:1px solid var(--line);
+    }
+    .two{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    @media (max-width:760px){ .two{grid-template-columns:1fr} }
+
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+
+    /* ✅ FIX: le code ne déborde pas / scroll horizontal propre */
+    pre.code{
+      margin:0;
+      padding:14px;
+      border-radius:12px;
+      background:#0a0f19;
+      color:#d7e7ff;
+      border:1px solid #1b2736;
+      overflow-x:auto;
+      overflow-y:hidden;
+      white-space:pre;        /* on garde la mise en forme du snippet */
+      word-break:normal;      /* pas de casse bizarre */
+      max-width:100%;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .hint{font-size:13px; color:#93a3bf}
+    .divider{height:1px; border:none; border-top:1px dashed #243148; margin:16px 0}
+
+    footer{
+      margin-top:28px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:#8fa3c6;
+      font-size:13px;
+      flex-wrap:wrap;
+    }
+
+    .howto{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#0c111b 0%, #0a0f19 100%);
+      border-radius:14px;
+      padding:14px;
+      margin:10px 0 14px 0;
+    }
+    .howto img{
+      width:100%;
+      max-width:420px;
+      height:auto;
+      display:block;
+      margin:0 auto;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:0 12px 28px rgba(0,0,0,.35);
+      background:#0b0f18;
+    }
+    @media (max-width:520px){
+      .howto img{max-width:100%}
+    }
+
+    /* ✅ NEW: header "Iframe" + bouton copier alignés */
+    .code-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin: 0 0 10px 0;
+    }
+    .code-head h3{
+      margin:0;
+      font-size:16px;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="logo">
+    <div class="logo-badge"></div>
+    <div>Betty — <span style="opacity:.85">Abonnement</span></div>
+  </div>
+</header>
+
+{# =========================
+   ✅ Bandeau statut PRO
+   ========================= #}
+{% set access_label = (cfg.access_label or 'ESSAI') %}
+{% set dot_class = 'trial' if access_label == 'ESSAI' else ('blocked' if access_label == 'BLOQUÉ' else '') %}
+
+<div class="card statusbar">
+  <div class="status-left">
+    <div class="dot {{ dot_class }}"></div>
+    <div>
+      <div class="status-title">
+        {% if access_label == 'PAYÉ' %}
+          Abonnement actif
+        {% elif access_label == 'BLOQUÉ' %}
+          Accès suspendu
+        {% else %}
+          Essai en cours
+        {% endif %}
+      </div>
+
+      <div class="status-hint">
+        {% if access_label == 'PAYÉ' %}
+          Votre bot est prêt. Vous pouvez l’intégrer maintenant.
+        {% elif access_label == 'BLOQUÉ' %}
+          Votre essai est terminé et aucun paiement n’a été validé. Régularisez pour réactiver.
+        {% else %}
+          Votre bot est déjà utilisable pendant l’essai.
+          {% if cfg.trial_days_left is not none %}
+            <span class="badge" style="margin-left:8px;">J-{{ cfg.trial_days_left }}</span>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a class="btn" href="{{ cfg.embed_url | e }}" target="_blank" rel="noopener">Tester le chat</a>
+  </div>
+</div>
+
+<div class="grid">
+
+<section class="card">
+  <h2 class="headline">Votre bot</h2>
+  <p class="sub">Vérifiez l’identité avant intégration.</p>
+
+  <div class="kv" style="margin-bottom:14px">
+    <div>
+      <img
+        class="avatar"
+        src="{{ (cfg.avatar_url or '') | e }}"
+        alt="Avatar de votre Betty"
+        loading="lazy"
+        onerror="this.onerror=null; this.src='{{ (cfg.fallback_avatar_url or '/avatar/agent_immo') | e }}'; this.style.opacity='.95'">
+    </div>
+    <div class="info-list">
+      <div><span class="k">Nom</span> — {{ cfg.display_name }}</div>
+
+      <div>
+        <span class="k">Pack</span> —
+        <span class="badge">{{ cfg.pack_label }}</span>
+        <span class="hint">({{ cfg.pack }})</span>
+      </div>
+
+      <div><span class="k">Couleur</span> — <span class="badge">{{ cfg.color }}</span></div>
+      <div><span class="k">Greeting</span> — {{ cfg.greeting }}</div>
+      <div><span class="k">Position</span> — px={{ cfg.px }}, py={{ cfg.py }}</div>
+      <div><span class="k">ID public</span> — <span class="mono">{{ cfg.public_id }}</span></div>
+    </div>
+  </div>
+
+  <details class="grp">
+    <summary>📦 Contenu du pack <span class="chev"></span></summary>
+    <div class="sub-panel two">
+      <div>
+        <ul>
+          <li>Assistant web embarqué</li>
+          <li>Qualification de leads</li>
+          <li>Dashboard de configuration</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li>Scripts métier</li>
+          <li>Collecte structurée</li>
+          <li>RGPD de base</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="grp" style="margin-top:12px">
+    <summary>🧪 Détails techniques <span class="chev"></span></summary>
+    <div class="sub-panel">
+      <pre class="code mono">{{ cfg | tojson(indent=2) }}</pre>
+    </div>
+  </details>
+</section>
+
+<aside class="card">
+  <h2 class="headline">Intégration</h2>
+
+  <div class="howto">
+    <img src="/betty_explik.png"
+         alt="Schéma d’intégration Betty"
+         loading="lazy"
+         onerror="this.style.display='none'">
+  </div>
+
+  <!-- ✅ NEW: Titre + bouton Copier -->
+  <div class="code-head">
+    <h3>Iframe</h3>
+    <button class="btn btn-primary" id="copy-iframe" type="button" aria-label="Copier le code d'intégration">
+      Copier
+    </button>
+  </div>
+
+  <!-- ✅ NEW: id + data-copy-source pour JS -->
+  <pre class="code mono" id="iframe-snippet" data-copy-source="iframe">{{ cfg.iframe_snippet | e }}</pre>
+
+  <p class="hint">URL : <span class="mono">{{ cfg.embed_url }}</span></p>
+
+  <hr class="divider">
+
+  
+</aside>
+
+</div>
+
+<footer>
+  <div>© Betty Bots — Spectra Media</div>
+  <div>support@spectramedia.ai</div>
+</footer>
+
+</div>
+
+<script>
+  try{
+    document.documentElement.style.setProperty('--brand',"{{ cfg.color or '#4F46E5' }}");
+  }catch(e){}
+
+  // ✅ NEW: Copier -> Copié ✅ (avec fallback si clipboard pas dispo)
+  (function(){
+    const btn = document.getElementById("copy-iframe");
+    const pre = document.getElementById("iframe-snippet");
+    if(!btn || !pre) return;
+
+    const original = btn.textContent;
+
+    async function doCopy(text){
+      // Clipboard API (moderne)
+      if (navigator.clipboard && window.isSecureContext){
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      // Fallback (ancien)
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try{
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      }catch(e){
+        document.body.removeChild(ta);
+        return false;
+      }
+    }
+
+    btn.addEventListener("click", async function(){
+      const text = (pre.textContent || "").trim();
+      if(!text) return;
+
+      btn.disabled = true;
+      try{
+        const ok = await doCopy(text);
+        btn.textContent = ok ? "Copié ✅" : "Erreur";
+      }catch(e){
+        btn.textContent = "Erreur";
+      }
+
+      setTimeout(function(){
+        btn.textContent = original;
+        btn.disabled = false;
+      }, 1400);
+    });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1288 @@
+    <!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Chatbot pour site web – Convertissez vos visiteurs en clients | BettyBot</title>
+  <meta name="description" content="Installez un chatbot sur votre site web et transformez vos visiteurs en clients. Essayez Betty gratuitement.">
+  <link rel="canonical" href="https://mybetty.online/chatbot-site-web">
+  <meta name="google-site-verification" content="7IynQLzF373Fu0uWDFPP8IqbM2Z4XBrr5IAAyBIdmRI" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Betty Bot — Transformez vos visiteurs en clients | Spectra Media AI</title>
+  <meta name="description" content="Betty répond à vos visiteurs 24h/24, qualifie leurs demandes et vous envoie des prospects prêts à convertir. Essai gratuit 7 jours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #07090f;
+      --bg2: #0d1121;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --accent: #4f7cff;
+      --accent2: #00c9a7;
+      --text: #eef0f8;
+      --muted: #7a85a8;
+      --light-bg: #f4f6fc;
+      --light-text: #0d1121;
+      --light-muted: #5a6480;
+      --radius: 20px;
+    }
+       .hero-content {
+         max-width: 600px;
+        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7,9,15,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      width: min(1100px, 92%);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 500;
+      font-size: 14px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── LAYOUT ── */
+    .container {
+      width: min(1100px, 92%);
+      margin: auto;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .glow-1 {
+      width: 600px; height: 600px;
+      background: rgba(79,124,255,0.18);
+      top: -100px; right: -100px;
+    }
+    .glow-2 {
+      width: 400px; height: 400px;
+      background: rgba(0,201,167,0.12);
+      bottom: -50px; left: -80px;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(79,124,255,0.12);
+      border: 1px solid rgba(79,124,255,0.25);
+      font-size: 13px;
+      font-weight: 500;
+      color: #8fa8ff;
+      margin-bottom: 28px;
+      letter-spacing: 0.02em;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(40px, 6.5vw, 78px);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      max-width: 860px;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(17px, 2vw, 21px);
+      color: var(--muted);
+      max-width: 640px;
+      margin-bottom: 40px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 40px rgba(79,124,255,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(79,124,255,0.5);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 16px 24px;
+      border-radius: 14px;
+      font-weight: 500;
+      font-size: 15px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .trust-item::before {
+      content: '✓';
+      color: var(--accent2);
+      font-weight: 700;
+    }
+
+    /* ── SECTION GENERIC ── */
+    section { padding: 90px 0; }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.08;
+      margin-bottom: 16px;
+    }
+    h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 52px;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    /* ── PROOF BANNER ── */
+    .proof-banner {
+      background: linear-gradient(135deg, rgba(79,124,255,0.15), rgba(0,201,167,0.1));
+      border: 1px solid rgba(79,124,255,0.2);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .proof-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .proof-text { flex: 1; min-width: 200px; }
+    .proof-text strong {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .proof-text p { color: var(--muted); font-size: 15px; }
+    .proof-link {
+      color: var(--accent2);
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid rgba(0,201,167,0.3);
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .proof-link:hover { background: rgba(0,201,167,0.1); }
+
+    /* ── PROBLEM / SOLUTION GRID ── */
+    .psol-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .psol-card {
+      background: var(--bg2);
+      padding: 36px 30px;
+      position: relative;
+    }
+    .psol-card:first-child { border-radius: var(--radius) 0 0 var(--radius); }
+    .psol-card:last-child { border-radius: 0 var(--radius) var(--radius) 0; }
+    .psol-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .psol-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .psol-card ul {
+      list-style: none;
+    }
+    .psol-card ul li {
+      font-size: 15px;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .psol-card ul li:last-child { border: none; }
+    .psol-card ul li .ic { flex-shrink: 0; margin-top: 2px; }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .step {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .step:hover {
+      border-color: rgba(79,124,255,0.3);
+      transform: translateY(-4px);
+    }
+    .step-n {
+      font-family: 'Syne', sans-serif;
+      font-size: 72px;
+      font-weight: 800;
+      color: rgba(79,124,255,0.08);
+      position: absolute;
+      top: -10px; right: 16px;
+      line-height: 1;
+    }
+    .step-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .step h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .step p { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 60px;
+    }
+    .stat {
+      background: var(--bg2);
+      padding: 36px 32px;
+      text-align: center;
+    }
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label { color: var(--muted); font-size: 15px; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testi {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.3s;
+    }
+    .testi:hover { border-color: rgba(79,124,255,0.25); }
+    .stars { color: #fbbf24; font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testi-author {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .testi-role { font-size: 13px; color: var(--muted); }
+
+    /* ── ROI CALCULATOR ── */
+    .roi-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+    }
+    .roi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .roi-label { font-size: 14px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+    .roi-input-row { margin-bottom: 24px; }
+    .roi-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .roi-input:focus { border-color: var(--accent); }
+    .roi-result {
+      background: linear-gradient(135deg, rgba(79,124,255,0.12), rgba(0,201,167,0.08));
+      border: 1px solid rgba(79,124,255,0.2);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+    .roi-result-label { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+    .roi-result-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent2);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .roi-result-sub { font-size: 14px; color: var(--muted); }
+    .roi-breakeven {
+      margin-top: 20px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      text-align: center;
+    }
+    .roi-breakeven strong { color: var(--text); }
+
+    .hero-layout{
+      position: relative;
+      z-index: 2;
+      width: min(1280px, 94%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(380px, 480px);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-demo{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hero-betty-frame{
+      width: 100%;
+      max-width: 460px;
+      height: 700px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    .hero-betty-frame iframe{
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
+    @media (max-width: 1100px){
+    .hero-layout{
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .hero-demo{
+      justify-content: center;
+    }
+
+    .hero-betty-frame{
+      max-width: 420px;
+      height: 620px;
+    }
+  }
+    
+    /* ── PRICING ── */
+    .pricing-wrap {
+      background: var(--light-bg);
+      color: var(--light-text);
+    }
+    .pricing-wrap h2, .pricing-wrap .section-label { color: var(--light-text); }
+    .pricing-wrap .section-label { color: #4f7cff; }
+    .pricing-wrap .lead { color: var(--light-muted); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .price-card {
+      background: #fff;
+      border: 1.5px solid #e5e9f5;
+      border-radius: 24px;
+      padding: 32px 28px;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .price-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(79,124,255,0.1);
+    }
+    .price-card.featured {
+      border-color: var(--accent);
+      box-shadow: 0 12px 48px rgba(79,124,255,0.15);
+      transform: scale(1.03);
+    }
+    .price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
+
+    .plan-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .badge-starter { background: #f0f4ff; color: #4f7cff; }
+    .badge-metier { background: #4f7cff; color: #fff; }
+    .badge-pro { background: #f0faf7; color: #00a885; }
+
+    .plan-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--light-text);
+      margin-bottom: 4px;
+    }
+    .plan-tagline { font-size: 14px; color: var(--light-muted); margin-bottom: 24px; }
+
+    .plan-price-block { margin-bottom: 8px; }
+    .plan-price {
+      font-family: 'Syne', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      color: var(--light-text);
+      line-height: 1;
+    }
+    .plan-price sup { font-size: 22px; vertical-align: super; }
+    .plan-price sub { font-size: 16px; font-weight: 400; color: var(--light-muted); }
+    .plan-per-day { font-size: 13px; color: var(--light-muted); margin-bottom: 24px; }
+    .plan-per-day strong { color: var(--accent); }
+
+    .plan-divider {
+      height: 1px;
+      background: #e5e9f5;
+      margin: 20px 0;
+    }
+
+    .plan-features { list-style: none; margin-bottom: 28px; }
+    .plan-features li {
+      font-size: 14px;
+      color: var(--light-muted);
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .plan-features li .check { color: #00a885; flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+    .plan-cta {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .cta-filled {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(79,124,255,0.3);
+    }
+    .cta-filled:hover { opacity: 0.9; transform: translateY(-1px); }
+    .cta-outline {
+      background: transparent;
+      border: 1.5px solid #d5daf0;
+      color: var(--light-text);
+    }
+    .cta-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .pricing-note {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--light-muted);
+    }
+    .pricing-note strong { color: var(--light-text); }
+
+    /* ── ENTERPRISE ── */
+    .enterprise-bar {
+      background: var(--light-bg);
+      padding: 0 0 70px;
+    }
+    .enterprise-card {
+      background: linear-gradient(135deg, #0d1121, #151d38);
+      border: 1px solid rgba(79,124,255,0.2);
+      border-radius: 24px;
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .enterprise-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .enterprise-card p { font-size: 15px; color: var(--muted); max-width: 500px; }
+
+    /* ── FAQ ── */
+    .faq-list { display: grid; gap: 12px; }
+    .faq-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 22px 24px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-q .arrow {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      background: var(--surface);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .arrow { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding: 0 24px 22px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── FINAL CTA ── */
+    .final-section {
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg) 0%, #0a0f20 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .final-glow {
+      position: absolute;
+      width: 600px; height: 300px;
+      background: rgba(79,124,255,0.15);
+      filter: blur(80px);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .final-section h2 { position: relative; z-index: 2; }
+    .final-section p {
+      position: relative; z-index: 2;
+      max-width: 560px;
+      margin: 0 auto 36px;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 300;
+    }
+    .final-section .cta-row { justify-content: center; position: relative; z-index: 2; }
+    .final-trust {
+      margin-top: 28px;
+      font-size: 13px;
+      color: var(--muted);
+      position: relative; z-index: 2;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+    }
+    .footer-inner {
+      width: min(1100px, 92%);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * {
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.25s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.35s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.42s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .psol-grid, .steps, .stats-row, .testimonials, .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .psol-card:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+      .psol-card:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+      .price-card.featured { transform: none; }
+      .roi-grid { grid-template-columns: 1fr; }
+      .enterprise-card { flex-direction: column; }
+      .steps { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      h1 { letter-spacing: -1px; }
+      .hero { padding: 100px 0 60px; }
+      .roi-box { padding: 28px 20px; }
+      .proof-banner { flex-direction: column; align-items: flex-start; }
+    }
+  .betty-discover-btn {
+  display: inline-block;
+  margin-bottom: 40px;
+  margin-top: 30px;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, #7b61ff, #a78bfa);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(123,97,255, 0.7); }
+  70% { box-shadow: 0 0 0 18px rgba(123,97,255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(123,97,255, 0); }
+}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">Betty<span>Bot</span></div>
+      <a href="#pricing" class="nav-cta">Essai gratuit 7 jours →</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+<section class="hero">
+  <div class="hero-glow glow-1"></div>
+  <div class="hero-glow glow-2"></div>
+
+  <div class="container hero-layout">
+    <div class="hero-content">
+    <a href="/betty" class="betty-discover-btn">Découvrir Betty</a>
+      <div class="eyebrow">Assistante IA métier — spécialement conçue pour les TPE françaises</div>
+      <h1>Betty transforme vos visiteurs,<br><em> en clients.</em></h1>
+   
+      <p class="hero-sub">
+        Betty répond à vos visiteurs 24h/24, comprend leur besoin et vous envoie
+        un lead complet — nom, email, téléphone, demande. Vous n'avez plus qu'à rappeler.
+      </p>
+
+      <div class="cta-row">
+        <a href="#pricing" class="btn-primary">
+          Tester Betty gratuitement <span>→</span>
+        </a>
+        <a href="https://www.dansedelphineletort.com/" target="_blank" class="btn-ghost">
+          Voir un exemple en direct ↗
+        </a>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item">7 jours gratuits, sans CB</div>
+        <div class="trust-item">Sans engagement</div>
+        <div class="trust-item">Résiliable en 1 clic</div>
+        <div class="trust-item">Paiement Stripe sécurisé</div>
+      </div>
+    </div>
+
+    <div class="hero-demo">
+      <div class="hero-betty-frame">
+        <iframe
+          src="https://www.spectramedia.online/chat?public_id=betty-spectra-core&embed=1"
+          title="Betty"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allow="clipboard-read; clipboard-write; microphone; autoplay">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- PROOF BANNER -->
+  <section style="padding: 0 0 60px;">
+    <div class="container">
+      <div class="proof-banner">
+        <div class="proof-avatar">DL</div>
+        <div class="proof-text">
+          <strong>+12 demandes reçues en 7 jours</strong>
+          <p>Centre de danse Delphine Letort, Le Mans — les visiteurs qui repartaient avant laissent maintenant leurs coordonnées.</p>
+        </div>
+        <a href="https://www.dansedelphineletort.com/" target="_blank" class="proof-link">Voir le bot en live ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM → SOLUTION -->
+  <section>
+    <div class="container">
+      <div class="section-label">Le problème</div>
+      <h2>Chaque visiteur qui part est un client<br><em>perdu en silence.</em></h2>
+      <p class="lead">Un formulaire de contact ne suffit plus. Les gens veulent une réponse immédiate, pas attendre votre retour le lendemain matin.</p>
+
+      <div class="psol-grid">
+        <div class="psol-card">
+          <div class="psol-num">01</div>
+          <h3>Le problème</h3>
+          <ul>
+            <li><span class="ic">✗</span> Le visiteur hésite, ne trouve pas</li>
+            <li><span class="ic">✗</span> Pas de réponse immédiate</li>
+            <li><span class="ic">✗</span> Il quitte sans laisser ses infos</li>
+            <li><span class="ic">✗</span> Vous ne savez même pas qu'il est passé</li>
+          </ul>
+        </div>
+        <div class="psol-card">
+          <div class="psol-num">02</div>
+          <h3>Ce que fait Betty</h3>
+          <ul>
+            <li><span class="ic" style="color: var(--accent2);">→</span> Elle engage la conversation</li>
+            <li><span class="ic" style="color: var(--accent2);">→</span> Elle comprend le besoin précis</li>
+            <li><span class="ic" style="color: var(--accent2);">→</span> Elle collecte nom, email, tél</li>
+            <li><span class="ic" style="color: var(--accent2);">→</span> Elle vous envoie un lead propre</li>
+          </ul>
+        </div>
+        <div class="psol-card">
+          <div class="psol-num">03</div>
+          <h3>Le résultat</h3>
+          <ul>
+            <li><span class="ic" style="color: #fbbf24;">★</span> Plus de prospects exploitables</li>
+            <li><span class="ic" style="color: #fbbf24;">★</span> Moins de temps perdu à trier</li>
+            <li><span class="ic" style="color: #fbbf24;">★</span> Image plus pro = vous paraissez disponible</li>
+            <li><span class="ic" style="color: #fbbf24;">★</span> Vous rappelez mieux, pas plus</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section style="background: var(--bg2); padding: 90px 0;">
+    <div class="container">
+      <div class="section-label">Comment ça marche</div>
+      <h2>Installé en 10 minutes.<br>Opérationnel <em>immédiatement.</em></h2>
+      <p class="lead">Pas besoin d'un développeur. Un copier-coller suffit.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">1</div>
+          <div class="step-icon">⚙️</div>
+          <h3>Vous configurez</h3>
+          <p>Choisissez votre métier, personnalisez nom, avatar, couleur et message d'accueil. Compatible WordPress, Wix, Webflow, HTML.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">2</div>
+          <div class="step-icon">💬</div>
+          <h3>Betty accueille</h3>
+          <p>Dès qu'un visiteur arrive, Betty engage la conversation, comprend son besoin et récolte ses coordonnées avec naturel.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">3</div>
+          <div class="step-icon">📬</div>
+          <h3>Vous recevez</h3>
+          <p>Vous recevez un message clair avec nom, email, téléphone et besoin. Il ne vous reste plus qu'à rappeler les demandes sérieuses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI CALCULATOR -->
+  <section>
+    <div class="container">
+      <div class="section-label">Calculateur de ROI</div>
+      <h2>Un seul client suffit à<br><em>rembourser Betty.</em></h2>
+      <p class="lead">Entrez vos chiffres pour voir si Betty s'autofinance chez vous.</p>
+
+      <div class="roi-box">
+        <div class="roi-grid">
+          <div>
+            <div class="roi-input-row">
+              <div class="roi-label">Valeur moyenne d'une prestation (€)</div>
+              <input class="roi-input" type="number" id="prestation" value="200" min="1">
+            </div>
+            <div class="roi-input-row">
+              <div class="roi-label">Visiteurs par mois sur votre site</div>
+              <input class="roi-input" type="number" id="visiteurs" value="300" min="1">
+            </div>
+            <div class="roi-input-row">
+              <div class="roi-label">Formule choisie (€/mois)</div>
+              <input class="roi-input" type="number" id="plan" value="59" min="29">
+            </div>
+          </div>
+          <div>
+            <div class="roi-result">
+              <div class="roi-result-label">ROI mensuel estimé</div>
+              <div class="roi-result-val" id="roi-val">+341€</div>
+              <div class="roi-result-sub">si Betty convertit ~2% de vos visiteurs</div>
+            </div>
+            <div class="roi-breakeven">
+              Betty se rembourse si elle génère <strong id="breakeven-val">1 client</strong> supplémentaire par mois.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="background: var(--bg2); padding: 90px 0;">
+    <div class="container">
+      <div class="section-label">Résultats observés</div>
+      <h2>Des chiffres, pas<br><em>des promesses.</em></h2>
+      <p class="lead">Basés sur les conversations et retours clients en cours.</p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-val">+120</div>
+          <div class="stat-label">demandes qualifiées / mois</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">−35%</div>
+          <div class="stat-label">de temps perdu en tri</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">4,8★</div>
+          <div class="stat-label">satisfaction des visiteurs</div>
+        </div>
+      </div>
+
+      <div class="testimonials">
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Avant j'avais des messages incomplets. Maintenant je reçois le besoin + le contact complet. Je rappelle moins, mais mieux."</p>
+          <div class="testi-author">Karim</div>
+          <div class="testi-role">Services à domicile</div>
+        </div>
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Betty m'enlève la phase tri et les questions répétitives. Je gagne du temps tous les jours sans y penser."</p>
+          <div class="testi-author">Élodie</div>
+          <div class="testi-role">Indépendante</div>
+        </div>
+        <div class="testi">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Les visiteurs ont une réponse immédiate même quand je suis en rendez-vous. Ça rassure et ça donne une image plus pro."</p>
+          <div class="testi-author">Thomas</div>
+          <div class="testi-role">Activité locale</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing-wrap">
+    <div class="container">
+      <div class="section-label">Tarifs</div>
+      <h2 style="color: var(--light-text);">Simple, transparent,<br><span style="color: var(--accent);">sans surprise.</span></h2>
+      <p class="lead">Moins de 2€ par jour pour ne plus perdre un seul prospect. Sans engagement, résiliable à tout moment.</p>
+
+      <div class="pricing-grid">
+        <!-- STARTER -->
+        <div class="price-card">
+          <div class="plan-badge badge-starter">Starter</div>
+          <div class="plan-name">Betty Starter</div>
+          <div class="plan-tagline">Pour tester sans risque</div>
+          <div class="plan-price-block">
+            <div class="plan-price"><sup>€</sup>29<sub>/mois</sub></div>
+          </div>
+          <div class="plan-per-day">≈ <strong>0,97€ par jour</strong></div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> 1 site web</li>
+            <li><span class="check">✓</span> Version neutre (généraliste)</li>
+            <li><span class="check">✓</span> Réponses 24h/24</li>
+            <li><span class="check">✓</span> Collecte nom + email</li>
+            <li><span class="check">✓</span> Script plug & play</li>
+          </ul>
+          <a href="{{ url_for('checkout_starter') }}" class="plan-cta cta-outline">Commencer →</a>
+        </div>
+
+        <!-- METIER (FEATURED) -->
+        <div class="price-card featured">
+          <div class="plan-badge badge-metier">⭐ Recommandé</div>
+          <div class="plan-name">Betty Métier</div>
+          <div class="plan-tagline">La version complète qui convertit</div>
+          <div class="plan-price-block">
+            <div class="plan-price"><sup>€</sup>59<sub>/mois</sub></div>
+          </div>
+          <div class="plan-per-day">≈ <strong>1,97€ par jour</strong> — moins qu'un café</div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> <strong>Version métier adaptée à votre activité</strong></li>
+            <li><span class="check">✓</span> Qualification complète : nom, email, tél, besoin</li>
+            <li><span class="check">✓</span> Ton et questions personnalisés</li>
+            <li><span class="check">✓</span> Réponses instantanées 24h/24</li>
+            <li><span class="check">✓</span> WordPress / Wix / Webflow / HTML</li>
+            <li><span class="check">✓</span> +20 métiers disponibles</li>
+          </ul>
+          <a href="https://www.spectramedia.online/config" class="plan-cta cta-filled">Tester 7 jours gratuitement →</a>
+        </div>
+
+        <!-- PRO -->
+        <div class="price-card">
+          <div class="plan-badge badge-pro">Pro</div>
+          <div class="plan-name">Betty Pro</div>
+          <div class="plan-tagline">Pour aller plus loin</div>
+          <div class="plan-price-block">
+            <div class="plan-price"><sup>€</sup>99<sub>/mois</sub></div>
+          </div>
+          <div class="plan-per-day">≈ <strong>3,30€ par jour</strong></div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li><span class="check">✓</span> <strong>Multi-sites</strong></li>
+            <li><span class="check">✓</span> Tout inclus dans Métier</li>
+            <li><span class="check">✓</span> Support prioritaire</li>
+            <li><span class="check">✓</span> Suivi analytique avancé</li>
+            <li><span class="check">✓</span> Accompagnement configuration</li>
+          </ul>
+          <a href="https://www.spectramedia.online/config" class="plan-cta cta-outline">Choisir Pro →</a>
+        </div>
+      </div>
+
+      <p class="pricing-note">
+        Option installation clé en main : <strong>+99€ une seule fois</strong> — on installe Betty pour vous, directement sur votre site.
+      </p>
+    </div>
+  </section>
+
+  <!-- ENTERPRISE -->
+  <div class="enterprise-bar">
+    <div class="container">
+      <div class="enterprise-card">
+        <div>
+          <h3>Vous gérez plusieurs sites ?</h3>
+          <p>Agences, réseaux, cabinets multi-sites — contactez-nous pour une offre sur mesure avec paramétrage avancé et accompagnement prioritaire.</p>
+        </div>
+        <a href="mailto:spectramediabots@gmail.com?subject=Devis%20Betty%20Entreprise" class="btn-primary" style="white-space: nowrap;">Demander un devis →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <div class="section-label">FAQ</div>
+      <h2>Les questions<br><em>fréquentes.</em></h2>
+      <div class="faq-list" style="max-width: 760px; margin-top: 40px;">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Quelle différence entre Starter (29€) et Métier (59€) ?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">La version Starter est généraliste : Betty répond correctement mais ne connaît pas votre métier précisément. La version Métier est configurée pour votre activité (artisan, thérapeute, prof, commerçant…) : les questions, le ton et la qualification sont adaptés. C'est ce qui fait la différence sur la qualité des leads.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Est-ce vraiment sans engagement ?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Oui, totalement. Vous pouvez résilier depuis votre espace Stripe à tout moment, sans frais ni préavis. Aucun contrat à signer.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            L'installation est difficile ?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Non. Après configuration, vous recevez un script à copier-coller dans votre site. Compatible avec WordPress, Wix, Webflow, et tout site HTML. En cas de blocage, l'option installation à 99€ (une seule fois) nous confie ce travail.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Mes données sont-elles protégées ?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Oui. Les données des visiteurs sont traitées de manière confidentielle et ne sont jamais revendues. Suppression possible sur simple demande.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Betty garantit-elle des résultats ?
+            <span class="arrow">+</span>
+          </button>
+          <div class="faq-a">Non, et aucun outil honnête ne le peut. Betty améliore l'accueil, la clarté des demandes et le taux de captation. Les résultats dépendent de votre trafic, votre secteur et votre offre. C'est pourquoi nous proposons 7 jours gratuits : testez par vous-même.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-section">
+    <div class="final-glow"></div>
+    <div class="container">
+      <div class="section-label" style="color: var(--accent2);">Prêt à démarrer ?</div>
+      <h2 style="margin-bottom: 20px;">7 jours pour voir<br><em>si Betty vous convient.</em></h2>
+      <p>Aucune carte bancaire requise pour l'essai. Vous décidez après, en connaissance de cause.</p>
+      <div class="cta-row">
+        <a href="https://www.spectramedia.online/config" class="btn-primary">Tester Betty gratuitement →</a>
+        <a href="https://www.dansedelphineletort.com/" target="_blank" class="btn-ghost">Voir une démo live ↗</a>
+      </div>
+      <div class="final-trust">
+        Paiement sécurisé Stripe · Sans engagement · Résiliation immédiate · Données confidentielles
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 <strong style="color: var(--text);">Spectra Media AI</strong> — Betty Bot</div>
+      <div style="display: flex; gap: 24px;">
+        <a href="mailto:spectramediabots@gmail.com" style="color: var(--muted); transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#7a85a8'">Contact</a>
+        <a href="https://www.spectramedia.online/config" style="color: var(--muted); transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#7a85a8'">Configurer Betty</a>
+        <a href="https://ambassador.spectramedia.online/inscription" style="color: var(--muted); transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#7a85a8'">Ambassadeurs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* FAQ toggle */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* ROI Calculator */
+    function calcRoi() {
+      const prestation = parseFloat(document.getElementById('prestation').value) || 0;
+      const visiteurs  = parseFloat(document.getElementById('visiteurs').value) || 0;
+      const plan       = parseFloat(document.getElementById('plan').value) || 59;
+
+      const leads = visiteurs * 0.02;           // 2% de conversion estimée
+      const ca    = leads * prestation;
+      const roi   = ca - plan;
+
+      document.getElementById('roi-val').textContent =
+        (roi >= 0 ? '+' : '') + Math.round(roi) + '€';
+      document.getElementById('roi-val').style.color =
+        roi >= 0 ? 'var(--accent2)' : '#f87171';
+
+      const clients = Math.ceil(plan / prestation);
+      document.getElementById('breakeven-val').textContent =
+        clients + ' client' + (clients > 1 ? 's' : '');
+    }
+
+    ['prestation','visiteurs','plan'].forEach(id => {
+      document.getElementById(id).addEventListener('input', calcRoi);
+    });
+    calcRoi();
+  </script>
+
+</body>
+</html>

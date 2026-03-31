@@ -1,0 +1,10 @@
+{
+  "id": "betty_neutre_001",
+  "name": "Betty Neutre",
+  "description": "Version neutre de Betty, adaptée pour tous les métiers non prévus.",
+  "avatar": "avatar.png",
+  "yaml": "betty_neutre_001.yaml",
+  "category": "general",
+  "tags": ["neutre", "generic", "professionnel"],
+  "enabled": true
+}

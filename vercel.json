@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "^/static/(.*\\.webp)$",
+      "headers": {
+        "Content-Type": "image/webp"
+      },
+      "dest": "/static/$1"
+    },
+    { "src": "^/static/(.*)$", "dest": "/static/$1" },
+    { "src": "^/api/?$", "dest": "api/index.py" },
+    { "src": "^/api/(.*)$", "dest": "api/index.py" },
+
+    {
+      "src": "^(.*)$",
+      "has": [
+        {
+          "type": "host",
+          "value": "spectramedia.online"
+        }
+      ],
+      "status": 301,
+      "headers": {
+        "Location": "https://mybetty.online$1"
+      }
+    }
+  ]
+}
