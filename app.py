@@ -542,34 +542,43 @@ COLLECTE DU LEAD (obligatoire) :
 # LLM
 # =========================================================
 
-def call_llm_with_history(system_prompt: str, history: list, user_input: str) -> str:
+def call_llm_with_history(system_prompt, history, user_input):
+    print("API KEY:", TOGETHER_API_KEY)
+
     if not TOGETHER_API_KEY:
-        return ""
-    headers  = {"Authorization": f"Bearer {TOGETHER_API_KEY}", "Content-Type": "application/json"}
-    messages = [{"role": "system", "content": system_prompt or ""}]
-    messages.extend(history or [])
-    messages.append({"role": "user", "content": user_input})
-    payload  = {
-        "model":       LLM_MODEL,
-        "max_tokens":  LLM_MAX_TOKENS,
-        "temperature": 0.55,
-        "messages":    messages,
-    }
+        print("❌ PAS DE CLE API")
+        return "ERREUR: PAS DE CLE API"
+
     try:
-        r = requests.post(TOGETHER_API_URL, headers=headers, json=payload, timeout=30)
+        r = requests.post(
+            TOGETHER_API_URL,
+            headers={
+                "Authorization": f"Bearer {TOGETHER_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": LLM_MODEL,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    *history,
+                    {"role": "user", "content": user_input}
+                ],
+                "max_tokens": 200
+            },
+            timeout=30
+        )
+
+        print("STATUS:", r.status_code)
+        print("RAW:", r.text[:300])
+
         if r.ok:
-            content = (
-                r.json()
-                .get("choices", [{}])[0]
-                .get("message", {})
-                .get("content", "")
-                .strip()
-            )
-            return content or "LLM VIDE"
-        app.logger.warning(f"[LLM] HTTP {r.status_code}: {r.text[:200]}")
+            return r.json()["choices"][0]["message"]["content"]
+
+        return "ERREUR API"
+
     except Exception as e:
-        app.logger.error(f"[LLM] {type(e).__name__}: {e}")
-    return ""
+        print("EXCEPTION:", e)
+        return "ERREUR EXCEPTION"
 
 
 # =========================================================
