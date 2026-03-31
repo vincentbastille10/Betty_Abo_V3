@@ -490,7 +490,7 @@ def build_system_prompt(pack: str, profile: dict, greeting: str = "") -> str:
     3. Inject greeting hint if present
     """
     pack = (pack or "avocat").strip().lower()
-    yaml_path = os.path.join(app.root_path, "packs", f"{pack}.yaml")
+    yaml_path = os.path.join(os.getcwd(), "packs", f"{pack}.yaml")
 
     # --- Load YAML pack ---
     base_prompt = ""
